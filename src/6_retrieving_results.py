@@ -13,6 +13,6 @@ for idx in range(4):
     user.code.train(xArr=features, yArr=targets).get()
 
     os.rename(f'src/result/{SEED}/auc.txt', f'src/result/{SEED}/auc_{idx}.txt')
-    os.rename(f'src/result/{SEED}/model.txt', f'src/result/{SEED}/model_{idx}.txt')
+    os.rename(f'src/result/{SEED}/model.pth', f'src/result/{SEED}/model_{idx}.pth')
 
     data_site.land()

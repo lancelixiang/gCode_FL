@@ -10,8 +10,10 @@ def train(xArr, yArr):
     import os
 
     from lib.ViTLike import ViTLike
+    
+    STAGE = 'MOCK' if os.path.exists(f'src/result/{SEED}/auc.txt') else 'REAL'
 
-    NUM_EPOCHE = 50
+    NUM_EPOCHE = 10
     SEED = 2024
     torch.manual_seed(SEED)
     torch.cuda.manual_seed(SEED)
@@ -47,11 +49,14 @@ def train(xArr, yArr):
         lossStr = f'Loss: {running_loss / len(y_arr):.4f}'
         aurocStr = f'auroc: {auroc}'
         str = f'{epcohStr}, {lossStr}, {aurocStr}'
-        mode = 'w' if epoch == 0 else 'a'
-        with open(f'src/result/{SEED}/auc.txt', mode, encoding='utf-8') as file:
-            file.write(str + '\n')
+        
+        if STAGE == 'REAL':
+            mode = 'w' if epoch == 0 else 'a'
+            with open(f'src/result/{SEED}/auc.txt', mode, encoding='utf-8') as file:
+                file.write(str + '\n')
 
-    torch.save(model, f'src/result/{SEED}/model.pth')
+    if STAGE == 'REAL':
+        torch.save(model, f'src/result/{SEED}/model.pth')
 
 
 for idx in range(4):
