@@ -30,9 +30,9 @@ for idx in range(4):
         features = torch.cat((features1, features2), dim=2)
         featuresArr.append(features)
         featuresArr_mock.append(torch.from_numpy(
-            np.random.uniform(low=-1, size=features.shape)))
-        labelArr.append(insE['label'])
-        labelArr_mock.append([0, 1, 1, 0])
+            np.random.uniform(low=-1, size=features.shape)).to(torch.float))
+        labelArr.append(torch.tensor([insE['label']]))
+        labelArr_mock.append(torch.tensor([[0, 1, 1, 0]]))
 
     features_asset = sy.Asset(
         name="Gleason Cancer Data: Features",
