@@ -1,18 +1,16 @@
 import syft as sy
 
 
-def train(task, xArr, yArr):
-    from timm.layers import trunc_normal_
+def train(xArr, yArr):
     import torch.nn as nn
     import torch
     import torch.optim as optim
     from tqdm import tqdm
     from sklearn.metrics import roc_curve, auc
     import os
-    
+
     from lib.ViTLike import ViTLike
 
-    
     NUM_EPOCHE = 50
     SEED = 2024
     torch.manual_seed(SEED)
@@ -25,7 +23,7 @@ def train(task, xArr, yArr):
     optimizer = optim.RAdam(
         model.parameters(), lr=0.0002, weight_decay=0.00001)
 
-    for epoch in tqdm(range(NUM_EPOCHE), desc=f'{task}'):
+    for epoch in tqdm(range(NUM_EPOCHE)):
         model.train().to('cuda')
         running_loss = 0.0
         y_arr = []
@@ -50,12 +48,10 @@ def train(task, xArr, yArr):
         aurocStr = f'auroc: {auroc}'
         str = f'{epcohStr}, {lossStr}, {aurocStr}'
         mode = 'w' if epoch == 0 else 'a'
-        with open(f'src/result/{SEED}/{task}.txt', mode, encoding='utf-8') as file:
+        with open(f'src/result/{SEED}/auc.txt', mode, encoding='utf-8') as file:
             file.write(str + '\n')
 
-    # 此处因为模型定义在函数内部，不能序列化，只保留state
-    # torch.save(model.state_dict(), f'src/result/{SEED}/{task}.pth')
-    torch.save(model, f'src/result/{SEED}/{task}.pth')
+    torch.save(model, f'src/result/{SEED}/model.pth')
 
 
 for idx in range(4):
@@ -65,11 +61,14 @@ for idx in range(4):
     dataset = user.datasets['Gleason Cancer Biomarker']
     features, targets = dataset.assets
 
-    # train(task=f'user_{idx}', xArr=features.mock, yArr=targets.mock)
-    remote_user_code = sy.syft_function_single_use(xArr=features, yArr=targets)(train)
-    research_project = user.create_project(
+    # train(xArr=features.mock, yArr=targets.mock)
+    remote_user_code = sy.syft_function_single_use(
+        xArr=features, yArr=targets)(train)
+    research_project = sy.Project(
         name="Gleason Cancer Project",
         description='',
-        user_email_address="user@hutb.com"
+        members=[user]
     )
+    
     code_request = research_project.create_code_request(remote_user_code, user)
+    data_site.land()
