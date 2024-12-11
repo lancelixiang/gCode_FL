@@ -10,8 +10,6 @@ def train(xArr, yArr):
     import os
 
     from lib.ViTLike import ViTLike
-    
-    STAGE = 'MOCK' if os.path.exists(f'src/result/{SEED}/auc.txt') else 'REAL'
 
     NUM_EPOCHE = 10
     SEED = 2024
@@ -19,6 +17,7 @@ def train(xArr, yArr):
     torch.cuda.manual_seed(SEED)
     torch.cuda.manual_seed_all(SEED)
     os.makedirs(f'src/result/{SEED}/', exist_ok=True)
+    STAGE = 'MOCK' if os.path.exists(f'src/result/{SEED}/auc.txt') else 'REAL'
 
     model = ViTLike(embed_dim=2048)
     criterion = nn.BCEWithLogitsLoss()
@@ -49,7 +48,7 @@ def train(xArr, yArr):
         lossStr = f'Loss: {running_loss / len(y_arr):.4f}'
         aurocStr = f'auroc: {auroc}'
         str = f'{epcohStr}, {lossStr}, {aurocStr}'
-        
+
         if STAGE == 'REAL':
             mode = 'w' if epoch == 0 else 'a'
             with open(f'src/result/{SEED}/auc.txt', mode, encoding='utf-8') as file:
@@ -66,7 +65,12 @@ for idx in range(4):
     dataset = user.datasets['Gleason Cancer Biomarker']
     features, targets = dataset.assets
 
+    # import os
+    # SEED = 2024
     # train(xArr=features.mock, yArr=targets.mock)
+    # os.rename(f'src/result/{SEED}/auc.txt', f'src/result/{SEED}/auc_{idx}.txt')
+    # os.rename(f'src/result/{SEED}/model.pth', f'src/result/{SEED}/model_{idx}.pth')
+    
     remote_user_code = sy.syft_function_single_use(
         xArr=features, yArr=targets)(train)
     research_project = sy.Project(
@@ -74,6 +78,6 @@ for idx in range(4):
         description='',
         members=[user]
     )
-    
+
     code_request = research_project.create_code_request(remote_user_code, user)
     data_site.land()
