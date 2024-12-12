@@ -37,12 +37,12 @@ for idx in range(4):
     features_asset = sy.Asset(
         name="Gleason Cancer Data: Features",
         data=featuresArr,      # real data
-        mock=featuresArr_mock  # mock data
+        mock=featuresArr_mock[0:3]  # mock data
     )
     targets_asset = sy.Asset(
         name="Gleason Cancer Data: Targets",
         data=labelArr,      # real data
-        mock=labelArr_mock  # mock data
+        mock=labelArr_mock[0:3]  # mock data
     )
 
     gleason_cancer_dataset = sy.Dataset(

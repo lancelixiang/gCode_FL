@@ -20,6 +20,9 @@ def train(xArr, yArr):
     STAGE = 'MOCK' if os.path.exists(f'src/result/{SEED}/auc.txt') else 'REAL'
 
     model = ViTLike(embed_dim=2048)
+    if os.path.exists(f'src/result/{SEED}/state_dict.pth'):
+        state_dict = torch.load(f'src/result/{SEED}/state_dict.pth', weights_only=True)
+        model.load_state_dict(state_dict)
     criterion = nn.BCEWithLogitsLoss()
     optimizer = optim.RAdam(
         model.parameters(), lr=0.0002, weight_decay=0.00001)
