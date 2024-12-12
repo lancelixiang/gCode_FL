@@ -1,5 +1,5 @@
-Epoch [1/10], Loss: 0.0006, auroc: 1.0
-Epoch [2/10], Loss: 0.0001, auroc: 1.0
+Epoch [1/10], Loss: 0.0001, auroc: 1.0
+Epoch [2/10], Loss: 0.0000, auroc: 1.0
 Epoch [3/10], Loss: 0.0000, auroc: 1.0
 Epoch [4/10], Loss: 0.0000, auroc: 1.0
 Epoch [5/10], Loss: 0.0000, auroc: 1.0
