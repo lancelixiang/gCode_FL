@@ -2,12 +2,14 @@ import syft as sy
 import pandas as pd
 import numpy as np
 import torch
+import os
 
 SEED = 88
 np.random.seed(SEED)
 
 SLIDE_DATA = pd.read_csv(f'src/data0.csv', index_col=0)
-
+if os.path.exists(f'src/result/{SEED}/state_dict.pth'):
+    os.remove(f'src/result/{SEED}/state_dict.pth')
 
 for idx in range(4):
     data_site = sy.orchestra.launch(
