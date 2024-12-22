@@ -1,7 +1,7 @@
 import syft as sy
 import os
 
-SEED = 2024
+SEED = 88
 
 for idx in range(4):
     data_site = sy.orchestra.launch(

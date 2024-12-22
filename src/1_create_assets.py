@@ -3,10 +3,10 @@ import pandas as pd
 import numpy as np
 import torch
 
-SEED = 2024
+SEED = 88
 np.random.seed(SEED)
 
-SLIDE_DATA = pd.read_csv(f'src/data.csv', index_col=0)
+SLIDE_DATA = pd.read_csv(f'src/data0.csv', index_col=0)
 
 
 for idx in range(4):
@@ -22,7 +22,7 @@ for idx in range(4):
     labelArr_mock = []
     for id in data:
         insE = torch.load(
-            f'dataset/efficientnet_b0/{id}.pth', weights_only=False)
+            f'dataset/efficientnet_b1/{id}.pth', weights_only=False)
         insM = torch.load(
             f'dataset/MambaVision-S-1K/{id}.pth', weights_only=False)
         features1 = torch.transpose(insE['features'], 1, 0)

@@ -3,11 +3,11 @@ import pandas as pd
 from sklearn.metrics import roc_curve, auc
 import torch.nn as nn
 
-model = torch.load(f'src/result/2024/model_0.pth', weights_only=False)
-model0 = torch.load(f'src/result/2024/model_0.pth', weights_only=False)
-model1 = torch.load(f'src/result/2024/model_1.pth', weights_only=False)
-model2 = torch.load(f'src/result/2024/model_2.pth', weights_only=False)
-model3 = torch.load(f'src/result/2024/model_3.pth', weights_only=False)
+model = torch.load(f'src/result/88/model_0.pth', weights_only=False)
+model0 = torch.load(f'src/result/88/model_0.pth', weights_only=False)
+model1 = torch.load(f'src/result/88/model_1.pth', weights_only=False)
+model2 = torch.load(f'src/result/88/model_2.pth', weights_only=False)
+model3 = torch.load(f'src/result/88/model_3.pth', weights_only=False)
 
 state_dict = model.state_dict()
 state_dict0 = model0.state_dict()
@@ -23,17 +23,17 @@ for k in state_dict:
         state_dict3[k],
     ]).mean(dim=0)
 
-torch.save(state_dict, f'src/result/2024/state_dict.pth')
+torch.save(state_dict, f'src/result/88/state_dict.pth')
 
 # 测试性能开始
 model.load_state_dict(state_dict)
-SLIDE_DATA = pd.read_csv(f'src/data.csv', index_col=0)
+SLIDE_DATA = pd.read_csv(f'src/data0.csv', index_col=0)
 data = SLIDE_DATA.loc[:, 'test'].dropna()
 featuresArr = []
 labelArr = []
 for id in data:
     insE = torch.load(
-        f'dataset/efficientnet_b0/{id}.pth', weights_only=False)
+        f'dataset/efficientnet_b1/{id}.pth', weights_only=False)
     insM = torch.load(
         f'dataset/MambaVision-S-1K/{id}.pth', weights_only=False)
     features1 = torch.transpose(insE['features'], 1, 0)
@@ -65,6 +65,6 @@ aurocStr = f'test auroc: {auroc}'
 str = f'{lossStr}, {aurocStr}'
 print(str)
 
-SEED = 2024
-with open(f'src/result/{SEED}/flavg.txt', 'a', encoding='utf-8') as file:
+SEED = 88
+with open(f'src/result/{SEED}/flavg0.txt', 'a', encoding='utf-8') as file:
     file.write(str + '\n')

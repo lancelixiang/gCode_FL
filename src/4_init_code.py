@@ -12,7 +12,7 @@ def train(xArr, yArr):
     from lib.ViTLike import ViTLike
 
     NUM_EPOCHE = 10
-    SEED = 2024
+    SEED = 88
     torch.manual_seed(SEED)
     torch.cuda.manual_seed(SEED)
     torch.cuda.manual_seed_all(SEED)
@@ -69,7 +69,7 @@ for idx in range(4):
     features, targets = dataset.assets
 
     # import os
-    # SEED = 2024
+    # SEED = 88
     # train(xArr=features.mock, yArr=targets.mock)
     # os.rename(f'src/result/{SEED}/auc.txt', f'src/result/{SEED}/auc_{idx}.txt')
     # os.rename(f'src/result/{SEED}/model.pth', f'src/result/{SEED}/model_{idx}.pth')
