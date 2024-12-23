@@ -17,6 +17,10 @@ SLIDE_DATA = pd.read_csv(f'src/data{idx}.csv', index_col=0)
 
 if os.path.exists(f'src/result/{SEED}/state_dict.pth'):
     os.remove(f'src/result/{SEED}/state_dict.pth')
+    os.remove(f'src/result/{SEED}/model_0.pth')
+    os.remove(f'src/result/{SEED}/model_1.pth')
+    os.remove(f'src/result/{SEED}/model_2.pth')
+    os.remove(f'src/result/{SEED}/model_3.pth')
 if os.path.exists(f'src/result/{SEED}/flavg{idx}.txt'):
     os.remove(f'src/result/{SEED}/flavg{idx}.txt')
     

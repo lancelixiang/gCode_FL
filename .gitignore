@@ -1,4 +1,4 @@
 dataset
 **/*.pth
 **/__pycache__/
-**/auc_*.txt
+**/auc*.txt
