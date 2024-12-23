@@ -3,14 +3,23 @@ import pandas as pd
 import numpy as np
 import torch
 import os
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument('--idx', default=0, type=int)
+args = parser.parse_args()
+idx = args.idx
 
 SEED = 88
 np.random.seed(SEED)
 
-SLIDE_DATA = pd.read_csv(f'src/data1.csv', index_col=0)
+SLIDE_DATA = pd.read_csv(f'src/data{idx}.csv', index_col=0)
+
 if os.path.exists(f'src/result/{SEED}/state_dict.pth'):
     os.remove(f'src/result/{SEED}/state_dict.pth')
-
+if os.path.exists(f'src/result/{SEED}/flavg{idx}.txt'):
+    os.remove(f'src/result/{SEED}/flavg{idx}.txt')
+    
 for idx in range(4):
     data_site = sy.orchestra.launch(
         name=f"gleason-research-centre-{idx}", reset=True)
