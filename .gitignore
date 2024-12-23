@@ -1,3 +1,7 @@
 dataset
 **/*.pth
 **/__pycache__/
+src/result/88/auc_0.txt
+src/result/88/auc_1.txt
+src/result/88/auc_2.txt
+src/result/88/auc_3.txt

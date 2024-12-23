@@ -1,0 +1,9 @@
+test Loss: 0.5364, test auroc: 0.8996225120109815
+test Loss: 0.5519, test auroc: 0.9231297185998627
+test Loss: 0.7071, test auroc: 0.9238160603980783
+test Loss: 0.6470, test auroc: 0.9397735072065889
+test Loss: 0.8697, test auroc: 0.9215854495538779
+test Loss: 0.8618, test auroc: 0.927076183939602
+test Loss: 0.7392, test auroc: 0.9356554564172959
+test Loss: 1.0539, test auroc: 0.9118050789293068
+test Loss: 0.9860, test auroc: 0.9265614275909403

@@ -27,7 +27,7 @@ torch.save(state_dict, f'src/result/88/state_dict.pth')
 
 # 测试性能开始
 model.load_state_dict(state_dict)
-SLIDE_DATA = pd.read_csv(f'src/data0.csv', index_col=0)
+SLIDE_DATA = pd.read_csv(f'src/data1.csv', index_col=0)
 data = SLIDE_DATA.loc[:, 'test'].dropna()
 featuresArr = []
 labelArr = []
@@ -66,5 +66,5 @@ str = f'{lossStr}, {aurocStr}'
 print(str)
 
 SEED = 88
-with open(f'src/result/{SEED}/flavg0.txt', 'a', encoding='utf-8') as file:
+with open(f'src/result/{SEED}/flavg1.txt', 'a', encoding='utf-8') as file:
     file.write(str + '\n')
