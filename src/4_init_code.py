@@ -11,7 +11,7 @@ def train(xArr, yArr):
 
     from lib.ViTLike import ViTLike
 
-    NUM_EPOCHE = 10
+    NUM_EPOCHE = 1
     SEED = 88
     torch.manual_seed(SEED)
     torch.cuda.manual_seed(SEED)
