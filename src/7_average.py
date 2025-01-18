@@ -6,8 +6,10 @@ import argparse
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--idx', default=0, type=int)
+parser.add_argument('--type', default='data', type=str)
 args = parser.parse_args()
 idx = args.idx
+type = args.type
 
 model = torch.load(f'src/result/88/model_0.pth', weights_only=False)
 model0 = torch.load(f'src/result/88/model_0.pth', weights_only=False)
@@ -33,7 +35,7 @@ torch.save(state_dict, f'src/result/88/state_dict.pth')
 
 # 测试性能开始
 model.load_state_dict(state_dict)
-SLIDE_DATA = pd.read_csv(f'src/data{idx}.csv', index_col=0)
+SLIDE_DATA = pd.read_csv(f'src/{type}{idx}.csv', index_col=0)
 data = SLIDE_DATA.loc[:, 'test'].dropna()
 featuresArr = []
 labelArr = []
@@ -72,5 +74,5 @@ str = f'{lossStr}, {aurocStr}'
 print(str)
 
 SEED = 88
-with open(f'src/result/{SEED}/flavg{idx}.txt', 'a', encoding='utf-8') as file:
+with open(f'src/result/{SEED}/flavg{type}{idx}.txt', 'a', encoding='utf-8') as file:
     file.write(str + '\n')
