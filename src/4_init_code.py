@@ -8,10 +8,15 @@ def train(xArr, yArr):
     from tqdm import tqdm
     from sklearn.metrics import roc_curve, auc
     import os
+    import copy
 
     from lib.ViTLike import ViTLike
 
-    NUM_EPOCHE = 1
+    # 早停法参数
+    NUM_EPOCHE = 10
+    MAX_AUC = 0
+    COUNT = 3
+
     SEED = 88
     torch.manual_seed(SEED)
     torch.cuda.manual_seed(SEED)
@@ -21,7 +26,8 @@ def train(xArr, yArr):
 
     model = ViTLike(embed_dim=2048)
     if os.path.exists(f'src/result/{SEED}/state_dict.pth'):
-        state_dict = torch.load(f'src/result/{SEED}/state_dict.pth', weights_only=True)
+        state_dict = torch.load(
+            f'src/result/{SEED}/state_dict.pth', weights_only=True)
         model.load_state_dict(state_dict)
     criterion = nn.BCEWithLogitsLoss()
     optimizer = optim.RAdam(
@@ -53,6 +59,17 @@ def train(xArr, yArr):
         str = f'{epcohStr}, {lossStr}, {aurocStr}'
 
         if STAGE == 'REAL':
+            # 使用早停法
+            if (auroc > MAX_AUC):
+                modelTmp = copy.deepcopy(model)
+                MAX_AUC = auroc
+                count = COUNT
+            else:
+                count -= 1
+            if (count == 0):
+                torch.save(modelTmp, f'src/result/{SEED}/model.pth')
+                break
+
             mode = 'w' if epoch == 0 else 'a'
             with open(f'src/result/{SEED}/auc.txt', mode, encoding='utf-8') as file:
                 file.write(str + '\n')
@@ -68,12 +85,13 @@ for idx in range(4):
     dataset = user.datasets['Gleason Cancer Biomarker']
     features, targets = dataset.assets
 
+    # 代码检查
     # import os
     # SEED = 88
     # train(xArr=features.mock, yArr=targets.mock)
     # os.rename(f'src/result/{SEED}/auc.txt', f'src/result/{SEED}/auc_{idx}.txt')
     # os.rename(f'src/result/{SEED}/model.pth', f'src/result/{SEED}/model_{idx}.pth')
-    
+
     remote_user_code = sy.syft_function_single_use(
         xArr=features, yArr=targets)(train)
     research_project = sy.Project(

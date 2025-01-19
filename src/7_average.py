@@ -49,7 +49,7 @@ for id in data:
     features = torch.cat((features1, features2), dim=2)
     featuresArr.append(features)
     labelArr.append(torch.tensor([insE['label']]))
-    
+
 criterion = nn.BCEWithLogitsLoss()
 model.eval().to('cuda')
 running_loss = 0.0
@@ -74,5 +74,7 @@ str = f'{lossStr}, {aurocStr}'
 print(str)
 
 SEED = 88
-with open(f'src/result/{SEED}/flavg{type}{idx}.txt', 'a', encoding='utf-8') as file:
+dir = 'stopEarly/'
+# dir = ''
+with open(f'src/result/{SEED}/{dir}flavg{type}{idx}.txt', 'a', encoding='utf-8') as file:
     file.write(str + '\n')
