@@ -15,7 +15,7 @@ def train(xArr, yArr):
     # 早停法参数
     NUM_EPOCHE = 10
     MAX_AUC = 0
-    COUNT = 3
+    COUNT = 10
 
     SEED = 88
     torch.manual_seed(SEED)

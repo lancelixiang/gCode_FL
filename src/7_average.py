@@ -74,7 +74,8 @@ str = f'{lossStr}, {aurocStr}'
 print(str)
 
 SEED = 88
-dir = 'stopEarly/'
+# dir = 'stopEarly/'
+dir = 'epoch10/'
 # dir = ''
 with open(f'src/result/{SEED}/{dir}flavg{type}{idx}.txt', 'a', encoding='utf-8') as file:
     file.write(str + '\n')

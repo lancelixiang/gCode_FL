@@ -25,7 +25,8 @@ if os.path.exists(f'src/result/{SEED}/state_dict.pth'):
     os.remove(f'src/result/{SEED}/model_1.pth')
     os.remove(f'src/result/{SEED}/model_2.pth')
     os.remove(f'src/result/{SEED}/model_3.pth')
-dir = 'stopEarly/'
+# dir = 'stopEarly/'
+dir = 'epoch10/'
 # dir = ''
 if os.path.exists(f'src/result/{SEED}/{dir}flavg{type}{idx}.txt'):
     os.remove(f'src/result/{SEED}/{dir}flavg{type}{idx}.txt')
