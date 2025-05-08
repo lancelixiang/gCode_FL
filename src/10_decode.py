@@ -48,12 +48,13 @@ def de(myTensor):
 # for k in state_dict:
 k='slide_head.bias'
 print('pppppppppp', state_dict0[k].shape)
-state_dict[k] = torch.stack([
-    en(state_dict0[k]),
-    en(state_dict1[k]),
-    en(state_dict2[k]),
-    en(state_dict3[k]),
-]).mean(dim=0)
+state_dict0[k] = en(state_dict0[k]) 
+# state_dict[k] = torch.stack([
+#     en(state_dict0[k]),
+#     en(state_dict1[k]),
+#     en(state_dict2[k]),
+#     en(state_dict3[k]),
+# ]).mean(dim=0)
 end_time_en = time.perf_counter()
 print(f"加密执行时间: {end_time_en - end_time} 秒")
 

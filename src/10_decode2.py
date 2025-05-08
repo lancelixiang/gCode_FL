@@ -21,11 +21,13 @@ flatten_values = tensor_2d.tolist()
 print('加密前', flatten_values)
 encrypted_2d = [public_key.encrypt(x) for x in flatten_values]
 end_time = time.perf_counter()
+print("加密后:\n", encrypted_2d)
+[print(x.ciphertext(), x.exponent) for x in encrypted_2d]
 print(f"执行时间: {end_time - start_time} 秒")
 
 # # 解密并恢复形状
 decrypted_2d = torch.tensor([private_key.decrypt(x)
                             for x in encrypted_2d]).reshape(tensor_2d.shape)
-print("解密后:\n", decrypted_2d.tolist())
 end_time2 = time.perf_counter()
+print("解密后:\n", decrypted_2d.tolist())
 print(f"执行时间: {end_time2 - end_time} 秒")
